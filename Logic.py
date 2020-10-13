@@ -75,3 +75,4 @@ class GameEngine:
 
     def delete_object(self, obj):
         self.objects.remove(obj)
+

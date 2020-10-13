@@ -14,10 +14,13 @@ def create_sprite(img, sprite_size):
 class AbstractObject(ABC):
     # class from task
     def __init__(self):
-        pass
+        self.sprite = None
+        self.position = None
 
     def draw(self, display):
-        pass
+        offset = display.screen_offset()
+        display.blit(self.sprite, ((self.position[0] - offset[0]) * display.game_engine.sprite_size,
+                                      (self.position[1] - offset[1]) * display.game_engine.sprite_size))
 
 
 class Interactive(ABC):

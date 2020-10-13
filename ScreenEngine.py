@@ -29,22 +29,26 @@ class ScreenHandle(pygame.Surface):
             canvas.blit(self.successor, self.next_coord)
             self.successor.draw(canvas)
 
-    def __enter__(self):
-        return self
 
-
-    # FIXME connect_engine
+    def connect_engine(self, engine):
+        if self.successor is not None:
+            return self.successor.connect_engine(engine)     
 
 
 class GameSurface(ScreenHandle):
 
     def connect_engine(self, engine):
         self.game_engine = engine
+        super().connect_engine(engine)
         # FIXME save engine and send it to next in chain
-        pass
+        
 
     def draw_hero(self):
         self.game_engine.hero.draw(self)
+
+    def screen_offset(self):
+        min_x, min_y = self.game_engine.hero.position[0] - 5, self.game_engine.hero.position[1] - 5
+        return min_x, min_y
 
     def draw_map(self):
 
@@ -180,10 +184,8 @@ class InfoWindow(ScreenHandle):
     # draw next surface in chain
 
     def connect_engine(self, engine):
-        # FIXME set this class as Observer to engine and send it to next in
-        # chain
-        pass
-
+        if self.successor is not None:
+            return self.successor.connect_engine(engine)
 
 class HelpWindow(ScreenHandle):
 
@@ -203,11 +205,14 @@ class HelpWindow(ScreenHandle):
     # FIXME You can add some help information
 
     def connect_engine(self, engine):
+
+        print('help engine')
         # FIXME save engine and send it to next in chain
         pass
 
     def draw(self, canvas):
         alpha = 0
+        print('help engine')
         if self.engine.show_help:
             alpha = 128
         self.fill((0, 0, 0, alpha))
