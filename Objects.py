@@ -158,6 +158,5 @@ class Enemy(Creature, Interactive):
         self.stats = stats
         self.xp = xp
 
-
-def interact(self, engine, hero):
-        pass
+    def interact(self, engine, hero):
+        self.action(engine, hero)

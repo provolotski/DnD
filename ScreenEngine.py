@@ -29,12 +29,17 @@ class ScreenHandle(pygame.Surface):
             canvas.blit(self.successor, self.next_coord)
             self.successor.draw(canvas)
 
+    def __enter__(self):
+        return self
+
+
     # FIXME connect_engine
 
 
 class GameSurface(ScreenHandle):
 
     def connect_engine(self, engine):
+        self.game_engine = engine
         # FIXME save engine and send it to next in chain
         pass
 
